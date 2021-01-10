@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/iColtz/twitch.js#readme",
   "devDependencies": {
-    "eslint": "^7.17.0"
+    "eslint": "^7.17.0",
+    "nodemon": "^2.0.7"
   }
 }
