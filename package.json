@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/iColtz/twitch.js/issues"
   },
-  "homepage": "https://github.com/iColtz/twitch.js#readme"
+  "homepage": "https://github.com/iColtz/twitch.js#readme",
+  "devDependencies": {
+    "eslint": "^7.17.0"
+  }
 }
