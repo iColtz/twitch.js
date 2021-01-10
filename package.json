@@ -1,0 +1,23 @@
+{
+  "name": "twitch.js",
+  "version": "1.0.0",
+  "description": "Twitch API made simpler.",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iColtz/twitch.js.git"
+  },
+  "keywords": [
+    "twitch",
+    "api"
+  ],
+  "author": "iColtz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iColtz/twitch.js/issues"
+  },
+  "homepage": "https://github.com/iColtz/twitch.js#readme"
+}
