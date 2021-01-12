@@ -88,7 +88,7 @@ class Twitch {
   }
 
   /**
-   * 
+   * Get clips by the broadcaster's ID.
    * @param {string} id - The ID of the broadcaster.
    * @param {ClipOptions} [options={}] - Optional options for fetching the clip.
    */
@@ -110,6 +110,31 @@ class Twitch {
 
     const url = this._parseOptions('clips', options);
     return this._fetch(url, 'GET');
+  }
+
+  /**
+   * Get clips by the game ID.
+   * @param {string} id - The ID of the game.
+   * @param {ClipOptions} options - Optional options for fetching the clip.
+   */
+  getClipsByGameId(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    endedAt,
+    startedAt,
+  } = {}) {
+    const options = {
+      game_id: id,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+      started_at: startedAt,
+      ended_at: endedAt,
+    };
+
+    const url = this._parseOptions('clips', options);
+    return this._fetch(url);
   }
 
 }
