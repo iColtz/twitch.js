@@ -70,6 +70,23 @@ class Twitch {
     }
   }
 
+  /**
+   * Gets game information by name or id.
+   * @param {string} query - The game name or ID.
+   */
+  getGame(query) {
+    let options;
+    
+    if (/\d+/.test(query)) {
+      options = { id: query };
+    } else {
+      options = { name: query };
+    }
+
+    const url = this._parseOptions('games', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
