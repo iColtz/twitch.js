@@ -88,6 +88,26 @@ class Twitch {
   }
 
   /**
+   * Gets the Twitch Clips.
+   * @param {string} method - The method to get the clips.
+   * @param {string} query - The query for the clips.
+   * @param {ClipOptions} options - The options for the clips.
+   */
+  _getClips(method, query, options) {
+    const opts = { 
+      [method]: query,
+      first: options.limit,
+      after: options.forwardPagination,
+      before: options.backwardPagination,
+      started_at: options.startedAt,
+      ended_at: options.endedAt,
+    };
+
+    const url = this._parseOptions('clips', opts);
+    return this._fetch(url, 'GET');
+  }
+
+  /**
    * Get clips by the broadcaster's ID.
    * @param {string} id - The ID of the broadcaster.
    * @param {ClipOptions} [options={}] - Optional options for fetching the clip.
@@ -99,17 +119,13 @@ class Twitch {
     endedAt,
     startedAt,
   } = {}) {
-    const options = { 
-      broadcaster_id: id,
+    return this._getClips('broadcaster_id', id, { 
       first: limit,
       after: forwardPagination,
       before: backwardPagination,
       started_at: startedAt,
       ended_at: endedAt,
-    };
-
-    const url = this._parseOptions('clips', options);
-    return this._fetch(url, 'GET');
+    });
   }
 
   /**
@@ -124,17 +140,13 @@ class Twitch {
     endedAt,
     startedAt,
   } = {}) {
-    const options = {
-      game_id: id,
+    return this._getClips('game_id', id, {
       first: limit,
       after: forwardPagination,
       before: backwardPagination,
       started_at: startedAt,
       ended_at: endedAt,
-    };
-
-    const url = this._parseOptions('clips', options);
-    return this._fetch(url);
+    });
   }
 
   /**
@@ -149,17 +161,13 @@ class Twitch {
     endedAt,
     startedAt,
   } = {}) {
-    const options = {
-      id,
+    return this._getClips('id', id, {
       first: limit,
       after: forwardPagination,
       before: backwardPagination,
       started_at: startedAt,
       ended_at: endedAt,
-    };
-
-    const url = this._parseOptions('clips', options);
-    return this._fetch(url);
+    });
   }
 
 }
