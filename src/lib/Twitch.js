@@ -87,6 +87,40 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * 
+   * @param {string} id - The ID of the broadcaster.
+   * @param {ClipOptions} [options={}] - Optional options for fetching the clip.
+   */
+  getClipsByBroadcaster(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    endedAt,
+    startedAt,
+  } = {}) {
+    const options = { 
+      broadcaster_id: id,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+      started_at: startedAt,
+      ended_at: endedAt,
+    };
+
+    const url = this._parseOptions('clips', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
+
+/**
+ * @typedef {Object} ClipOptions
+ * @property {number} [limit=20] - The limit of clips to be returned. Maxium: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {string} [backwardPagination] - The cursor for the backward pagination.
+ * @property {string} [startedAt] - Starting date for the returned clips in RFC3339 format.
+ * @property {string} [endedAt] - The ending date for the returned clips in RFC3339 format.
+ */
