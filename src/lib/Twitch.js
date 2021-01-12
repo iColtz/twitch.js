@@ -81,6 +81,16 @@ class Twitch {
   }
 
   /**
+   * Gets game information by the game name.
+   * @param {string} name - The name of the game.
+   */
+  getGameByName(name) {
+    const options = { name};
+    const url = this._parseOptions('games', options);
+    return this._fetch(url, 'GET');
+  }
+
+  /**
    * Gets the Twitch Clips.
    * @param {string} method - The method to get the clips.
    * @param {string} query - The query for the clips.
