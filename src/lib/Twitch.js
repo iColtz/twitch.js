@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const API = 'https://api.twitch.tv/helix/';
 
 /**
@@ -42,6 +44,30 @@ class Twitch {
     url = url.slice(0, -1);
 
     return url;
+  }
+
+  /**
+   * Fetch from twitch's public API.
+   * @param {string} url - The url to fetch.
+   * @param {string} method - The method to fetch. Either 'GET' or 'POST'.
+   */
+  async _fetch(url, method) {
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: {
+          'client-id': this.client_id,
+          'Authorization': `Bearer ${this.bearer_token}`,
+        }
+      });
+
+      const body = await res.json();
+
+      return body;
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 
 }
