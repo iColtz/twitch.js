@@ -251,6 +251,25 @@ class Twitch {
     });
   }
 
+  /**
+   * Gets active stream information using the username of the broadcaster.
+   * @param {string} name - The name(s) of the broadcasters. 
+   * @param {StreamOptions} [options={}] - 
+   */
+  getStreamsByUsername(name, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+  } = {}) {
+    return this._getStreams('user_login', name, { 
+      language: Array.isArray(language) ? [] : language,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+    });
+  }
+
 }
 
 module.exports = Twitch;
