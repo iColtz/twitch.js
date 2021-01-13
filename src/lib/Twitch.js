@@ -100,6 +100,25 @@ class Twitch {
   }
 
   /**
+   * Get the top games from Twitch.
+   * @param {GameOptions} [options={}] - The optional options for fetching the top games.
+   */
+  getTopGames({
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+  } = {}) {
+    const options = { 
+      first: limit, 
+      after: forwardPagination, 
+      before: backwardPagination, 
+    };
+    
+    const url = this._parseOptions('games/top', options);
+    return this._fetch(url, 'GET');
+  }
+
+  /**
    * Gets the Twitch Clips.
    * @param {string} method - The method to get the clips.
    * @param {string} query - The query for the clips.
@@ -388,6 +407,13 @@ class Twitch {
 }
 
 module.exports = Twitch;
+
+/**
+ * @typedef {Object} GameOptions
+ * @property {number} [limit=20] - The limit of games to be returned. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {string} [backwardPagination] - The cursor for the backward pagination.
+ */
 
 /**
  * @typedef {Object} ClipOptions
