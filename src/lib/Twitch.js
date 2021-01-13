@@ -323,10 +323,18 @@ class Twitch {
 
   /**
    * Gets Twitch user(s) by their Id.
-   * @param {string|Array} id - The Twitch user Id(s).
+   * @param {string|Array} id - The Twitch user(s) Id. Maxium: 100.
    */
   getUsersById(id) {
     return this._getUsers('id', id);
+  }
+
+  /**
+   * Gets Twitch user(s) by their username.
+   * @param {string|Array} name - The Twitch user(s) username. Maxium: 100.
+   */
+  getUsersByUsername(name) {
+    return this._getUsers('login', name);
   }
 
 }
