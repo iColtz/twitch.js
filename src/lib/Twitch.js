@@ -492,6 +492,26 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Gets information of the most recent hype train.
+   * @param {string} id - The Id of the broadcaster.
+   * @param {HypeTrainEventOptions} - The optional options for fetching hype trains.
+   */
+  getHypeTrainEvents(id, {
+    limit = 1,
+    forwardPagination,
+    eventId,
+  } = {}) {
+    const options = { 
+      broadcaster_id: id, 
+      first: limit,
+      cursor: forwardPagination,
+      id: eventId,
+    };
+
+    const url = this._parseOptions('hypetrain/events', options);
+    return this._fetch(url, 'GET');
+  }
 }
 
 module.exports = Twitch;
@@ -548,4 +568,11 @@ module.exports = Twitch;
  * @property {number} [limit=20] - The limit of channels to be returned. Maximum: 100.
  * @property {string} [forwardPagination] - The cursor for the forward pagination.
  * @property {boolean} [liveOnly=false] - Filter the channels to channels that are live.
+ */
+
+/**
+ * @typedef {Object} HypeTrainEventOptions
+ * @property {number} [limit=1] - The limit of hype trains to return. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {string} [eventId] - The Id of the hype train event to be fetched.
  */
