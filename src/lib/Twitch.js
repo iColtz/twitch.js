@@ -135,7 +135,7 @@ class Twitch {
    * @param {string} id - The ID of the broadcaster.
    * @param {ClipOptions} [options={}] - Optional options for fetching the clip.
    */
-  getClipsByBroadcaster(id, {
+  getClipsByBroadcasterId(id, {
     limit = 20,
     forwardPagination,
     backwardPagination,
