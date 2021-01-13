@@ -337,6 +337,25 @@ class Twitch {
     return this._getUsers('login', name);
   }
 
+  /**
+   * Gets a Twitch users followers.
+   * @param {string} id - The Id of the Twitch user.
+   * @param {FollowerOptions} [options={}] - The optional options for fetching the followers.
+   */
+  getUsersFollowers(id, {
+    limit = 20,
+    forwardPagination,
+  } = {}) {
+    const options = { 
+      to_id: id, 
+      first: limit, 
+      after: forwardPagination 
+    };
+
+    const url = this._parseOptions('users/follows', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
@@ -356,4 +375,10 @@ module.exports = Twitch;
  * @property {string} [forwardPagination] - The cursor for the forward pagination.
  * @property {string} [backwardPagination] - The cursor for the backward pagination.
  * @property {string|Array} [language] - The stream language. Value must be a ISO 639-1. Maxium: 100.
+ */
+
+/**
+ * @typedef {Object} FollowerOptions
+ * @property {number} [limit=20] - The limit of followers to return. Maxium: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
  */
