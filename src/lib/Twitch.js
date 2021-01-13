@@ -286,19 +286,8 @@ class Twitch {
    * @param {string} query - The query to fetch the user(s).
    */
   _getUsers(method, query) {
-    const opts = {};
-
-    if (method && query) {
-      opts[method] = Array.isArray(query) ? [] : query;
-
-      if (Array.isArray(query)) {
-        query.forEach((q) => {
-          opts[method].push(q);
-        });
-      }
-    }
-
-    const url = this._parseOptions('users', opts);
+    const options = { [method]: query };
+    const url = this._parseOptions('users', options);
     return this._fetch(url, 'GET');
   }
 
