@@ -116,7 +116,7 @@ class Twitch {
     
     const url = this._parseOptions('games/top', options);
     return this._fetch(url, 'GET');
-  }
+  } 
 
   /**
    * Gets the Twitch Clips.
