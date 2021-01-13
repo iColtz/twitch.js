@@ -115,6 +115,14 @@ class Twitch {
       ended_at: options.endedAt,
     };
 
+    if (method === 'id' && Array.isArray(query)) {
+      opts[method] = [];
+
+      query.forEach((q) => {
+        opts[method].push(q);
+      });
+    }
+
     const url = this._parseOptions('clips', opts);
     return this._fetch(url, 'GET');
   }
@@ -163,7 +171,7 @@ class Twitch {
 
   /**
    * Get clips by the game ID.
-   * @param {string} id - The ID of the game.
+   * @param {string|Array} id - The ID of the game. Maxium: 100.
    * @param {ClipOptions} options - Optional options for fetching the clip.
    */
   getClipsByClipId(id, {
