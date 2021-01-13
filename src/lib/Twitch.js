@@ -375,6 +375,16 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Get stream tags from a broadcaster stream.
+   * @param {string} id - The broadcasters Id.
+   */
+  getStreamTags(id) {
+    const options = { broadcaster_id: id };
+    const url = this._parseOptions('streams/tags', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
