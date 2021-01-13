@@ -442,6 +442,11 @@ class Twitch {
     });
   }
 
+  /**
+   * Search Twitch categories.
+   * @param {string} query - The query for search for categories.
+   * @param {SearchCategoryOptions} [options={}] - The optional options for search for categories.
+   */
   searchCategories(query, {
     limit = 20,
     forwardPagination,
@@ -451,7 +456,7 @@ class Twitch {
       first: limit,
       after: forwardPagination,
     };
-    
+
     const url = this._parseOptions('search/categories', options);
     return this._fetch(url, 'GET');
   }
@@ -499,4 +504,10 @@ module.exports = Twitch;
  * @property {string} [period='all'] - The period during which the video was created. Either: 'all' | 'day' | 'week' | 'month'
  * @property {string} [sort='time'] - Sort order of the videos. Either: 'time' | 'trending' | 'views'
  * @property {string} [type='all'] - Type of video. Either: 'all' | 'upload' | 'archive' | 'highlight'
+ */
+
+/**
+ * @typedef {Object} SearchCategoryOptions
+ * @property {number} [limit=20] - The limit of categories returned. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
  */
