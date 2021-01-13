@@ -404,6 +404,43 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Fetchs a videos from Twitch.
+   * @param {string} method - The fetch in which to fetch the video.
+   * @param {string} query - The query in which to fetch the video.
+   * @param {VideoOptions} options - The options in which to fetch the video.
+   */
+  _getVideos(method, query, options) {
+    options[method] = query;
+    const url = this._parseOptions('videos', options);
+    return this._fetch(url, 'GET');
+  }
+
+  /**
+   * Gets Twitch videos from a broadcaster.
+   * @param {string} id - The broadcaster's id.
+   * @param {VideoOptions} [options={}] - The options for fetching the videos. 
+   */
+  getVideosByBroadcasterId(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+    period = 'all',
+    sort = 'time',
+    type = 'all',
+  } = {}) {
+    return this._getVideos('user_id', id, {
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+      language,
+      period,
+      sort,
+      type,
+    });
+  }
+
 }
 
 module.exports = Twitch;
@@ -436,4 +473,15 @@ module.exports = Twitch;
  * @typedef {Object} FollowerOptions
  * @property {number} [limit=20] - The limit of followers to return. Maxium: 100.
  * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ */
+
+/**
+ * @typedef {Object} VideoOptions
+ * @property {number} [limit=20] - The limit of videos to return. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {string} [backwardPagination] - The cursor for the backward pagination.
+ * @property {string} [language] - The stream language. Value must be a ISO 639-1.
+ * @property {string} [period='all'] - The period during which the video was created. Either: 'all' | 'day' | 'week' | 'month'
+ * @property {string} [sort='time'] - Sort order of the videos. Either: 'time' | 'trending' | 'views'
+ * @property {string} [type='all'] - Type of video. Either: 'all' | 'upload' | 'archive' | 'highlight'
  */
