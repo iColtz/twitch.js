@@ -36,8 +36,17 @@ class Twitch {
     let url = API + method + '?';
 
     entries.forEach((param) => {
-      if (param[1]) {
-        url += param[0] + '=' + param[1] + '&';
+      const key = param[0];
+      const value = param[1];
+
+      if (value) {
+        if (Array.isArray(value)) {
+          value.forEach((p) => {
+            url += key + '=' + p + '&';
+          });
+        } else {
+          url += key + '=' + value + '&';
+        }
       }
     });
 
@@ -173,6 +182,56 @@ class Twitch {
     });
   }
 
+  /**
+   * Gets the Twitch Stream.
+   * @param {string} method - The method for fetching the stream.
+   * @param {string} query - The query for fetching the stream.
+   * @param {StreamOptions} options - The options for fetching the stream.
+   */
+  _getStreams(method, query, options) {
+    const opts = {
+      [method]: Array.isArray(query) ? [] : query,
+      language: options.language,
+      first: options.limit,
+      after: options.forwardPagination,
+      before: options.backwardPagination,
+    };
+
+    if (Array.isArray(query)) {
+      query.forEach((q) => {
+        opts[method].push(q);
+      });
+    }
+    
+    if (Array.isArray(opts.language)) {
+      opts.language.forEach((l) => {
+        opts.language.push(l);
+      });
+    }
+
+    const url = this._parseOptions('streams', opts);
+    return this._fetch(url);
+  }
+
+  /**
+   * Gets active stream information.
+   * @param {string} [query] - The broadcasters ID.
+   * @param {StreamOptions} [options={}] - The optional option for fetching the steam.
+   */
+  getStreamsByBroadcasterID(query, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+  } = {}) {
+    return this._getStreams('user_id', query, { 
+      language: Array.isArray(language) ? [] : language,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+    });
+  }
+
 }
 
 module.exports = Twitch;
@@ -184,4 +243,12 @@ module.exports = Twitch;
  * @property {string} [backwardPagination] - The cursor for the backward pagination.
  * @property {string} [startedAt] - Starting date for the returned clips in RFC3339 format.
  * @property {string} [endedAt] - The ending date for the returned clips in RFC3339 format.
+ */
+
+/**
+ * @typedef {Object} StreamOptions
+ * @property {number} [limit=20] - The limit of streams to be returned. Maxium: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {string} [backwardPagination] - The cursor for the backward pagination.
+ * @property {string|Array} [language] - The stream language. Value must be a ISO 639-1. Maxium: 100.
  */
