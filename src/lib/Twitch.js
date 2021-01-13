@@ -417,6 +417,31 @@ class Twitch {
     });
   }
 
+  /**
+   * Gets a Twitch video by the video id.
+   * @param {string|Array} id - The Id of the video. Maximum: 100.
+   * @param {VideoOptions} [options={}] - The optional options for fetching the video.
+   */
+  getVideosById(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+    period = 'all',
+    sort = 'time',
+    type = 'all',
+  } = {}) {
+    return this._getVideos('id', id, {
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+      language,
+      period,
+      sort,
+      type,
+    });
+  }
+
 }
 
 module.exports = Twitch;
