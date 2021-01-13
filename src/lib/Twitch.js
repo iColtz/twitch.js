@@ -215,7 +215,7 @@ class Twitch {
 
   /**
    * Gets active stream information.
-   * @param {string} [query] - The broadcasters ID.
+   * @param {string} query - The broadcasters ID.
    * @param {StreamOptions} [options={}] - The optional option for fetching the steam.
    */
   getStreamsByBroadcasterID(query, {
@@ -225,6 +225,25 @@ class Twitch {
     language,
   } = {}) {
     return this._getStreams('user_id', query, { 
+      language: Array.isArray(language) ? [] : language,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+    });
+  }
+
+  /**
+   * Gets active stream information using the Id of a game.
+   * @param {string} id - The Id of the game.
+   * @param {StreamOptions} [options={}] - The optional options for fetching the stream.
+   */
+  getStreamsByGameId(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+  } = {}) {
+    return this._getStreams('game_id', id, { 
       language: Array.isArray(language) ? [] : language,
       first: limit,
       after: forwardPagination,
