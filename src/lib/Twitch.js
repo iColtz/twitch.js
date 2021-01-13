@@ -299,6 +299,36 @@ class Twitch {
     });
   }
 
+  /**
+   * Gets Twitch users.
+   * @param {string} method - The method to fetch the user(s).
+   * @param {string} query - The query to fetch the user(s).
+   */
+  _getUsers(method, query) {
+    const opts = {};
+
+    if (method && query) {
+      opts[method] = Array.isArray(query) ? [] : query;
+
+      if (Array.isArray(query)) {
+        query.forEach((q) => {
+          opts[method].push(q);
+        });
+      }
+    }
+
+    const url = this._parseOptions('users', opts);
+    return this._fetch(url, 'GET');
+  }
+
+  /**
+   * Gets Twitch user(s) by their Id.
+   * @param {string|Array} id - The Twitch user Id(s).
+   */
+  getUsersById(id) {
+    return this._getUsers('id', id);
+  }
+
 }
 
 module.exports = Twitch;
