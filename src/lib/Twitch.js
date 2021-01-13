@@ -200,30 +200,8 @@ class Twitch {
    * @param {StreamOptions} options - The options for fetching the stream.
    */
   _getStreams(method, query, options) {
-    const opts = {
-      language: options.language,
-      first: options.limit,
-      after: options.forwardPagination,
-      before: options.backwardPagination,
-    };
-
-    if (method && query) {
-      opts[method] = Array.isArray(query) ? [] : query;
-
-      if (Array.isArray(query)) {
-        query.forEach((q) => {
-          opts[method].push(q);
-        });
-      }
-    }
-
-    if (Array.isArray(opts.language)) {
-      opts.language.forEach((l) => {
-        opts.language.push(l);
-      });
-    }
-
-    const url = this._parseOptions('streams', opts);
+    options[method] = query;
+    const url = this._parseOptions('streams', options);
     return this._fetch(url);
   }
 
