@@ -461,6 +461,27 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Search Twitch channels.
+   * @param {string} query - The search string.
+   * @param {SearchChannelsOptions} [options={}] - The optional options for search for channels.
+   */
+  searchChannels(query, {
+    limit = 20,
+    forwardPagination,
+    liveOnly = false,
+  } = {}) {
+    const options = {
+      query: encodeURIComponent(query),
+      first: limit,
+      after: forwardPagination,
+      live_only: liveOnly,
+    };
+
+    const url = this._parseOptions('search/channels', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
@@ -510,4 +531,11 @@ module.exports = Twitch;
  * @typedef {Object} SearchCategoryOptions
  * @property {number} [limit=20] - The limit of categories returned. Maximum: 100.
  * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ */
+
+/**
+ * @typedef {Object} SearchChannelsOptions
+ * @property {number} [limit=20] - The limit of channels to be returned. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
+ * @property {boolean} [liveOnly=false] - Filter the channels to channels that are live.
  */
