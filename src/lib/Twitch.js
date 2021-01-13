@@ -392,6 +392,31 @@ class Twitch {
     });
   }
 
+  /**
+   * Get Twitch videos from the game Id.
+   * @param {string} id - The Id of the game.
+   * @param {VideoOptions} [options={}] - The options for fetching the videos.
+   */
+  getVideosByGameId(id, {
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+    period = 'all',
+    sort = 'time',
+    type = 'all',
+  } = {}) {
+    return this._getVideos('game_id', id, {
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+      language,
+      period,
+      sort,
+      type,
+    });
+  }
+
 }
 
 module.exports = Twitch;
