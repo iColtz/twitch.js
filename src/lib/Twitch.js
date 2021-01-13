@@ -94,7 +94,7 @@ class Twitch {
    * @param {string} name - The name of the game.
    */
   getGameByName(name) {
-    const options = { name};
+    const options = { name };
     const url = this._parseOptions('games', options);
     return this._fetch(url, 'GET');
   }
