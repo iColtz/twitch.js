@@ -356,6 +356,25 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Gets a Twitch users following.
+   * @param {string} id - The Id of the Twitch user.
+   * @param {FollowerOptions} [options={}] - The optional options for fetching the following. 
+   */
+  getUsersFollowing(id, {
+    limit = 20,
+    forwardPagination,
+  } = {}) {
+    const options = { 
+      from_id: id,
+      first: limit,
+      after: forwardPagination,
+    };
+    
+    const url = this._parseOptions('users/follows', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
