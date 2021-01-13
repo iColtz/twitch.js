@@ -190,19 +190,22 @@ class Twitch {
    */
   _getStreams(method, query, options) {
     const opts = {
-      [method]: Array.isArray(query) ? [] : query,
       language: options.language,
       first: options.limit,
       after: options.forwardPagination,
       before: options.backwardPagination,
     };
 
-    if (Array.isArray(query)) {
-      query.forEach((q) => {
-        opts[method].push(q);
-      });
+    if (method && query) {
+      opts[method] = Array.isArray(query) ? [] : query;
+
+      if (Array.isArray(query)) {
+        query.forEach((q) => {
+          opts[method].push(q);
+        });
+      }
     }
-    
+
     if (Array.isArray(opts.language)) {
       opts.language.forEach((l) => {
         opts.language.push(l);
@@ -254,7 +257,7 @@ class Twitch {
   /**
    * Gets active stream information using the username of the broadcaster.
    * @param {string} name - The name(s) of the broadcasters. 
-   * @param {StreamOptions} [options={}] - 
+   * @param {StreamOptions} [options={}] - The optional options for fetching the streams.
    */
   getStreamsByUsername(name, {
     limit = 20,
@@ -263,6 +266,24 @@ class Twitch {
     language,
   } = {}) {
     return this._getStreams('user_login', name, { 
+      language: Array.isArray(language) ? [] : language,
+      first: limit,
+      after: forwardPagination,
+      before: backwardPagination,
+    });
+  }
+
+  /**
+   * Gets active stream information.
+   * @param {StreamOptions} [options={}] - The optional options for fetching the streams.
+   */
+  getStreams({
+    limit = 20,
+    forwardPagination,
+    backwardPagination,
+    language,
+  } = {}) {
+    return this._getStreams(null, null, { 
       language: Array.isArray(language) ? [] : language,
       first: limit,
       after: forwardPagination,
