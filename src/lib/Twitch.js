@@ -442,6 +442,20 @@ class Twitch {
     });
   }
 
+  searchCategories(query, {
+    limit = 20,
+    forwardPagination,
+  } = {}) {
+    const options = { 
+      query ,
+      first: limit,
+      after: forwardPagination,
+    };
+    
+    const url = this._parseOptions('search/categories', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
