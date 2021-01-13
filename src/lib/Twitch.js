@@ -482,6 +482,16 @@ class Twitch {
     return this._fetch(url, 'GET');
   }
 
+  /**
+   * Gets a Twitch broadcasters cheermotes.
+   * @param {string} id - The Id of the broadcaster.
+   */
+  getCheermotes(id) {
+    const options = { broadcaster_id: id };
+    const url = this._parseOptions('bits/cheermotes', options);
+    return this._fetch(url, 'GET');
+  }
+
 }
 
 module.exports = Twitch;
