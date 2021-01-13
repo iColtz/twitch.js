@@ -512,6 +512,23 @@ class Twitch {
     const url = this._parseOptions('hypetrain/events', options);
     return this._fetch(url, 'GET');
   }
+
+  /**
+   * Gets the Webhook subscriptions of a user identified by a Bearer token.
+   * @param {WebhookSubscriptionOptions} [options={}] - THe optional options for fetching weebhook subscriptions.
+   */
+  getWebhookSubscriptions({
+    limit = 20,
+    forwardPagination,
+  } = {}) {
+    const options = {
+      first: limit,
+      after: forwardPagination,
+    };
+
+    const url = this._parseOptions('webhooks/subscriptions', options);
+    return this._fetch(url, 'GET');
+  }
 }
 
 module.exports = Twitch;
@@ -575,4 +592,10 @@ module.exports = Twitch;
  * @property {number} [limit=1] - The limit of hype trains to return. Maximum: 100.
  * @property {string} [forwardPagination] - The cursor for the forward pagination.
  * @property {string} [eventId] - The Id of the hype train event to be fetched.
+ */
+
+/**
+ * @typedef {Object} WebhookSubscriptionOptions
+ * @property {number} [limit=20] - The number of weebhook subscriptions to return. Maximum: 100.
+ * @property {string} [forwardPagination] - The cursor for the forward pagination.
  */
