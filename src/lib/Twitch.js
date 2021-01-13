@@ -125,24 +125,8 @@ class Twitch {
    * @param {ClipOptions} options - The options for the clips.
    */
   _getClips(method, query, options) {
-    const opts = { 
-      [method]: query,
-      first: options.limit,
-      after: options.forwardPagination,
-      before: options.backwardPagination,
-      started_at: options.startedAt,
-      ended_at: options.endedAt,
-    };
-
-    if (method === 'id' && Array.isArray(query)) {
-      opts[method] = [];
-
-      query.forEach((q) => {
-        opts[method].push(q);
-      });
-    }
-
-    const url = this._parseOptions('clips', opts);
+    options[method] = query;
+    const url = this._parseOptions('clips', options);
     return this._fetch(url, 'GET');
   }
 
